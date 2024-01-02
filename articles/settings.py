@@ -13,11 +13,9 @@ SECRET_KEY = "django-insecure-ky%2i=e-s8#$p7oobzn6fx)06b45sd=5f=cek*_nw4ctwt#_(z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -26,8 +24,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    #"django_filters",
-    #"rest_framework.authtoken",
+    # "django_filters",
+    # "rest_framework.authtoken",
     "common",
 ]
 
@@ -114,10 +112,10 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-#REST_FRAMEWORK = {
+# REST_FRAMEWORK = {
 #    "DEFAULT_PAGINATION_CLASS": "common.views.CustomPagination",
 #    "PAGE_SIZE": 50,
 #    "DEFAULT_FILTER_BACKENDS": [
 #        'django_filters.rest_framework.DjangoFilterBackend',
 #    ],
-#}
+# }
