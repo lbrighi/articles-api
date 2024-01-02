@@ -1,4 +1,10 @@
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+# Carrega as variáveis de ambiente do arquivo .env
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-ky%2i=e-s8#$p7oobzn6fx)06b45sd=5f=cek*_nw4ctwt#_(z"
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -24,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "drf_yasg",
     # "django_filters",
     # "rest_framework.authtoken",
     "common",
@@ -112,10 +119,10 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# REST_FRAMEWORK = {
-#    "DEFAULT_PAGINATION_CLASS": "common.views.CustomPagination",
-#    "PAGE_SIZE": 50,
-#    "DEFAULT_FILTER_BACKENDS": [
-#        'django_filters.rest_framework.DjangoFilterBackend',
-#    ],
-# }
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 50,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+    ]
+}
