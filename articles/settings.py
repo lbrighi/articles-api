@@ -31,9 +31,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     "django_filters",
+    "easy_thumbnails"
     # "rest_framework.authtoken",
     "common",
     "user",
+    "blog",
 ]
 
 MIDDLEWARE = [
@@ -113,6 +115,10 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -127,3 +133,9 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = "user.User"
+
+THUMBNAIL_ALIASES = {
+    "": {
+        "avatar_image": {"size": (800, 600), "crop": True},
+    },
+}
