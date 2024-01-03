@@ -5,6 +5,9 @@
 # até mesmo com a flag depends_on no docker-compose.yml
 # sleep 10
 
+# Rodar as migrações
+python manage.py makemigrations
+
 # Aplicar migrações
 python manage.py migrate
 
