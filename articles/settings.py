@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     "django_filters",
-    "easy_thumbnails"
+    "easy_thumbnails",
     # "rest_framework.authtoken",
     "common",
     "user",

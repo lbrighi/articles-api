@@ -16,8 +16,19 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
+class SmallUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "name"
+        ]
+
+
 class GroupSerializer(serializers.ModelSerializer):
-    users = UserSerializer(many=True, read_only=True, source='user_set')
+    users = SmallUserSerializer(many=True, read_only=True, source='user_set')
 
     class Meta:
         model = Group
@@ -25,4 +36,12 @@ class GroupSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "users"
+        ]
+
+
+class SmallGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = [
+            "id"
         ]
