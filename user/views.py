@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter
 
+from user.filters import UserFilter
 from user.models import User
 from user.serializers import GroupSerializer, UserSerializer
 
@@ -18,6 +19,7 @@ class UserViewSet(viewsets.ModelViewSet):
         DjangoFilterBackend,
         OrderingFilter,
     )
+    filterset_class = UserFilter
 
 
 class GroupViewSet(viewsets.ModelViewSet):

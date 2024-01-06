@@ -2,11 +2,10 @@ from django.contrib.auth.models import Group
 from django.db import models
 from easy_thumbnails.fields import ThumbnailerImageField
 
-from common.models import BaseModel
 
-
-class Category(BaseModel):
+class Category(models.Model):
     name = models.CharField(max_length=200, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Categoria'
@@ -14,7 +13,8 @@ class Category(BaseModel):
         ordering = ['id']
 
 
-class Articles(BaseModel):
+class Articles(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=350, unique=True)
     article_category = models.ForeignKey(
         Category,
