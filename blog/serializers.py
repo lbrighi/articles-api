@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group
 from rest_framework import serializers
 
-from blog.models import ArticleGroup, Articles, Category
+from blog.models import Articles, Category
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -26,7 +26,6 @@ class SmallCategorySerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     article_category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
     groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
-    is_all_users = serializers.BooleanField(write_only=True)
 
     class Meta:
         model = Articles
@@ -42,13 +41,13 @@ class ArticleSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        article_category = validated_data.pop('article_category').id
-        groups = validated_data.pop('groups', [])
-        is_all_users = validated_data.pop('is_all_users', False)
+        groups_data = validated_data.pop('groups', [])  # Remova os grupos do validated_data
 
-        article = Articles.objects.create(article_category_id=article_category, **validated_data)
+        # Crie o artigo sem os grupos
+        article = Articles.objects.create(**validated_data)
 
-        for group in groups:
-            ArticleGroup.objects.create(articles=article, groups=group, is_all_users=is_all_users)
+        # Adicione os grupos ao artigo
+        for group in groups_data:
+            article.groups.add(group)
 
         return article

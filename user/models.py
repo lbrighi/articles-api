@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
@@ -38,3 +39,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Usuário'
         verbose_name_plural = 'Usuários'
         ordering = ['id']
+
+    def save(self, *args, **kwargs):
+        if self.password:
+            self.password = make_password(self.password)
+        super().save(*args, **kwargs)
