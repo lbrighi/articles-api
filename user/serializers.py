@@ -5,6 +5,7 @@ from user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = User
@@ -12,7 +13,8 @@ class UserSerializer(serializers.ModelSerializer):
             "id",
             "email",
             "name",
-            "groups"
+            "groups",
+            "password"
         ]
 
 

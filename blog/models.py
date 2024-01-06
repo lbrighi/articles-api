@@ -22,11 +22,6 @@ class Articles(BaseModel):
     )
     cover_image = ThumbnailerImageField(upload_to='photos', blank=True)
     hightlight = models.BooleanField(default=False)
-    groups = models.ManyToManyField(Group, through='ArticleGroup')
+    groups = models.ManyToManyField(Group)
     description = models.TextField()
-
-
-class ArticleGroup(models.Model):
-    articles = models.ForeignKey(Articles, on_delete=models.SET_NULL, null=True, blank=True, related_name='article_group_articles')
-    groups = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, blank=True, related_name='article_group_groups')
     is_all_users = models.BooleanField(default=False)

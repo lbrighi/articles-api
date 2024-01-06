@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -32,7 +33,9 @@ INSTALLED_APPS = [
     "drf_yasg",
     "django_filters",
     "easy_thumbnails",
-    # "rest_framework.authtoken",
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
+    "corsheaders",
     "common",
     "user",
     "blog",
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -125,6 +129,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
+    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),  # Defina a duração do token (opcional)
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Defina a duração do token de refresh (opcional)
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 50,
     "DEFAULT_FILTER_BACKENDS": [
@@ -132,10 +143,33 @@ REST_FRAMEWORK = {
     ],
 }
 
+
 AUTH_USER_MODEL = "user.User"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",  # Para autenticar usando o username
+    "user.backends.EmailOrUsernameModelBackend",  # Para autenticar usando o email
+]
 
 THUMBNAIL_ALIASES = {
     "": {
-        "avatar_image": {"size": (800, 600), "crop": True},
+        "medium": {"size": (800, 600), "crop": True},
     },
 }
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_EXPOSE_HEADERS = [
+    'content-type',
+    'x-custom-header',
+]
+CORS_PREFLIGHT_MAX_AGE = 3600  # 1 hora
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_HEADERS = True
