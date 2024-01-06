@@ -41,12 +41,9 @@ class ArticleSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        groups_data = validated_data.pop('groups', [])  # Remova os grupos do validated_data
-
-        # Crie o artigo sem os grupos
+        groups_data = validated_data.pop('groups', [])
         article = Articles.objects.create(**validated_data)
 
-        # Adicione os grupos ao artigo
         for group in groups_data:
             article.groups.add(group)
 

@@ -4,10 +4,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-# Carrega as variáveis de ambiente do arquivo .env
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -146,10 +144,6 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = "user.User"
 
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",  # Para autenticar usando o username
-    "user.backends.EmailOrUsernameModelBackend",  # Para autenticar usando o email
-]
 
 THUMBNAIL_ALIASES = {
     "": {
@@ -169,7 +163,7 @@ CORS_EXPOSE_HEADERS = [
     'content-type',
     'x-custom-header',
 ]
-CORS_PREFLIGHT_MAX_AGE = 3600  # 1 hora
+CORS_PREFLIGHT_MAX_AGE = 3600
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_ALL_HEADERS = True
