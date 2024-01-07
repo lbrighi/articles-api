@@ -27,7 +27,7 @@ class SmallCategorySerializer(serializers.ModelSerializer):
 class ArticleSerializer(serializers.ModelSerializer):
     article_category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
     groups = serializers.PrimaryKeyRelatedField(many=True, queryset=Group.objects.all())
-    created_at = serializers.DateTimeField(write_only=True, required=False)
+    created_at = serializers.DateTimeField(required=False)
 
     class Meta:
         model = Articles
@@ -55,3 +55,11 @@ class ArticleSerializer(serializers.ModelSerializer):
             article.groups.add(group)
 
         return article
+
+    def get_article_category(self, article):
+        return article.article_category.name if article.article_category else None
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['article_category'] = self.get_article_category(instance)
+        return representation
