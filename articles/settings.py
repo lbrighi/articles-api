@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
     "rest_framework",
     "drf_yasg",
     "django_filters",
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "corsheaders",
     "user",
-    "blog",
+    "blog"
 ]
 
 MIDDLEWARE = [
@@ -108,7 +109,7 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -144,9 +145,16 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = "user.User"
 
 
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters',
+)
+
 THUMBNAIL_ALIASES = {
-    "": {
-        "medium": {"size": (800, 600), "crop": True},
+    '': {
+        'cover_image': {'size': (800, 600), 'crop': True},
     },
 }
 

@@ -14,7 +14,7 @@ class Category(models.Model):
 
 
 class Articles(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField()
     title = models.CharField(max_length=350, unique=True)
     article_category = models.ForeignKey(
         Category,
