@@ -59,7 +59,11 @@ class ArticleSerializer(serializers.ModelSerializer):
     def get_article_category(self, article):
         return article.article_category.name if article.article_category else None
 
+    def format_date(self, date):
+        return date.strftime("%d/%m/%Y") if date else None
+
     def to_representation(self, instance):
         representation = super().to_representation(instance)
+        representation["created_at"] = self.format_date(instance.created_at)
         representation['article_category'] = self.get_article_category(instance)
         return representation
